@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>끝말잇기</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            word: "김경범",
+            value: "",
+            message: "",
+          };
+        },
+        methods: {
+          checkWord(e) {
+            e.preventDefault();
+            if (this.value[0] === this.word[this.word.length - 1]) {
+              this.message = "딩동댕";
+              this.word = this.value;
+            } else {
+              this.message = "땡";
+            }
+            this.value = "";
+            this.$refs.inputRef.focus();
+          },
+        },
+        template: `
+        <h2>{{word}}</h2>
+      <form v-on:submit="checkWord">
+        <input required ref="inputRef" type="text" v-model="value" />
+        <button type="submit">입력!</button>
+        <h2>{{message}}</h2>
+      </form>
+        `,
+      }).mount("#app");
+    </script>
+  </body>
+</html>
