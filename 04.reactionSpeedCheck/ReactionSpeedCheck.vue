@@ -54,7 +54,7 @@ export default {
   <h2 v-if="react !== ''">평균시간 : {{ react }}ms</h2>
   <button v-on:click="reset">리셋</button>
 </template>
-<style>
+<style scoped>
 .box {
   width: 500px;
   height: 500px;
