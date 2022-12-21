@@ -1,5 +1,8 @@
 <script>
+import LottoBall from "./LottoBall.vue";
+
 let timer;
+let count = 0;
 const numberLogic = function () {
   let randomNumber;
   const s = new Set();
@@ -13,22 +16,12 @@ const numberLogic = function () {
 export default {
   data() {
     return {
-      randomColor: [
-        "red",
-        "orange",
-        "yellow",
-        "green",
-        "blue",
-        "gray",
-        "purple",
-      ],
       numberList: [],
-      bonusNumber: "",
+      bonusNumber: null,
     };
   },
   methods: {
     pickNumbers() {
-      let count = 0;
       if (this.numberList.length < 6) {
         this.numberList.push(numberLogic()[count]);
         count++;
@@ -41,6 +34,7 @@ export default {
       this.numberList = [];
       this.bonusNumber = "";
       timer = setInterval(() => this.pickNumbers(), 1000);
+      count = 0;
     },
   },
   computed: {
@@ -51,18 +45,19 @@ export default {
   mounted() {
     timer = setInterval(() => this.pickNumbers(), 1000);
   },
+  components: {
+    LottoBall,
+  },
 };
 </script>
 <template>
   <h2>당첨 숫자</h2>
   <div class="numberList">
-    <div v-for="i in numberList" v-bind:style="{ backgroundColor: setColor }">
-      {{ i }}
-    </div>
+    <LottoBall v-for="i in numberList" v-bind:number="i" />
   </div>
   <h2>보너스!</h2>
   <div v-if="bonusNumber" class="numberList">
-    <div v-bind:style="{ backgroundColor: setColor }">{{ bonusNumber }}</div>
+    <LottoBall v-bind:bonusNumber="bonusNumber" />
     <button v-on:click="resetNumber">리셋!</button>
   </div>
 </template>
