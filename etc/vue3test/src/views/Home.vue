@@ -3,7 +3,8 @@
   <p>{{ counterStore.count }}</p>
   <button type="button" @click="onClickIncrementButton">+</button>
   <div>자식에서 받은 값 : {{ inputValue }}</div>
-  <Children @custom-event="getEventFromChildren" />
+  <div>자식에서 변경한 state : {{ count }}</div>
+  <Children @custom-event="getEventFromChildren" :countPlus="countPlus" />
 </template>
 
 <script setup lang="ts">
@@ -13,6 +14,7 @@ import { ref } from 'vue'
 
 const counterStore = useCounterStore()
 const inputValue = ref('')
+const count = ref(10)
 
 const onClickIncrementButton = () => {
   counterStore.increment()
@@ -20,6 +22,10 @@ const onClickIncrementButton = () => {
 }
 const getEventFromChildren = (data: string) => {
   inputValue.value = data
+}
+const countPlus = (data: number) => {
+  alert(data)
+  count.value += data
 }
 </script>
 
