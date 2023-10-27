@@ -1,0 +1,26 @@
+<template>
+  <a>hello world</a>
+  <p>{{ counterStore.count }}</p>
+  <button type="button" @click="onClickIncrementButton">+</button>
+  <div>자식에서 받은 값 : {{ inputValue }}</div>
+  <Children @custom-event="getEventFromChildren" />
+</template>
+
+<script setup lang="ts">
+import Children from '@/components/Children.vue'
+import { useCounterStore } from '@/stores/counter'
+import { ref } from 'vue'
+
+const counterStore = useCounterStore()
+const inputValue = ref('')
+
+const onClickIncrementButton = () => {
+  counterStore.increment()
+  console.log(import.meta.env.VITE_TEST ?? '없네요')
+}
+const getEventFromChildren = (data: string) => {
+  inputValue.value = data
+}
+</script>
+
+<style scoped></style>
